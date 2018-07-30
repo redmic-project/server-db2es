@@ -1,0 +1,28 @@
+version: '3.5'
+
+services:
+  db2es:
+    image: ${IMAGE_NAME}:${IMAGE_TAG:-latest}
+    environment:
+      - MICROSERVICE_NAME
+      - MICROSERVICE_PORT
+      - SPRING_PROFILES_ACTIVE
+      - SERVICE_PORT=${MICROSERVICE_PORT}
+      - SPRING_DATASOURCE_USERNAME
+      - SPRING_DATASOURCE_PASSWORD
+      - JOBS_DATASOURCE_USERNAME
+      - JOBS_DATASOURCE_PASSWORD
+      - ELASTIC_XPACKSECURITYUSER
+      - JAVA_OPTS=-Xmx512m -Xss512m
+    networks:
+      - elastic-net
+      - postgres-net
+      - redmic-net
+
+networks:
+  elastic-net:
+    external: true
+  postgres-net:
+    external: true
+  redmic-net:
+    external: true

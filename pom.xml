@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.0.0.RELEASE</version>
+		<relativePath />
+	</parent>
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>es.redmic</groupId>
+	<artifactId>db2es</artifactId>
+	<packaging>jar</packaging>
+	<version>0.6.0</version>
+	<name>DB2ES</name>
+	<description>Traspaso de datos de DB a ElasticSearch</description>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<java.version>1.8</java.version>
+		<tomcat.version>8.5.28</tomcat.version>
+
+		<!-- REDMIC -->
+		<redmic.db.version>0.6.0</redmic.db.version>
+		<redmic.elasticsearch.version>0.6.0</redmic.elasticsearch.version>
+		<redmic.exceptions.version>0.6.0</redmic.exceptions.version>
+		<redmic.utils.version>0.6.0</redmic.utils.version>
+		<redmic.models.version>0.6.0</redmic.models.version>
+		<redmic.mediastorage.version>0.6.0</redmic.mediastorage.version>
+		<redmic.sitemapgen4j.version>0.6.0</redmic.sitemapgen4j.version>
+
+		<redmic.test-utils.version>0.6.0</redmic.test-utils.version>
+
+		<!-- OTHERS -->
+		<orika-core.version>1.4.6</orika-core.version>
+		<commons-fileupload>1.3.2</commons-fileupload>
+
+		<!-- Plugins -->
+		<jacoco.version>0.8.1</jacoco.version>
+		<asciidoctor.maven.plugin.version>1.5.6</asciidoctor.maven.plugin.version>
+
+		<!-- Environment variables -->
+		<env.MAVEN_REPO_URL>https://artifactory.redmic.net/artifactory</env.MAVEN_REPO_URL>
+	</properties>
+
+	<dependencies>
+		<!-- Redmic -->
+		<dependency>
+			<groupId>es.redmic.lib</groupId>
+			<artifactId>db</artifactId>
+			<version>${redmic.db.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>ma.glasnost.orika</groupId>
+					<artifactId>orika-core</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>es.redmic.lib</groupId>
+			<artifactId>elasticsearch</artifactId>
+			<version>${redmic.elasticsearch.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>es.redmic.lib</groupId>
+			<artifactId>exceptions</artifactId>
+			<version>${redmic.exceptions.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>es.redmic.lib</groupId>
+			<artifactId>models</artifactId>
+			<version>${redmic.models.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>es.redmic.lib</groupId>
+			<artifactId>utils</artifactId>
+			<version>${redmic.utils.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>ma.glasnost.orika</groupId>
+			<artifactId>orika-core</artifactId>
+			<version>${orika-core.version}</version>
+		</dependency>
+
+
+		<!-- Spring boot -->
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-websocket</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-batch</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<!-- Tests -->
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-jdbc</artifactId>
+		</dependency>
+
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<jvmArguments>
+						-Xdebug
+						-Duser.timezone=UTC
+						-Xrunjdwp:server=y,transport=dt_socket,suspend=n,address=9898
+					</jvmArguments>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+						<configuration>
+							<executable>true</executable>
+							<finalName>db2es</finalName>
+							<outputDirectory>dist</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<includes>
+						<include>**/Test*.java</include>
+						<include>**/*Test.java</include>
+						<include>**/*Documentation.java</include>
+					</includes>
+					<systemPropertyVariables>
+						<org.springframework.restdocs.outputDir>
+							${project.build.directory}/generated-snippets
+						</org.springframework.restdocs.outputDir>
+					</systemPropertyVariables>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
