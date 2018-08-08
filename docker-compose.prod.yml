@@ -2,8 +2,6 @@ version: '3.5'
 
 services:
   db2es:
-    ports:
-      - ${MICROSERVICE_PORT}
     networks:
       - traefik-net
     deploy:
