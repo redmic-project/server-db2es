@@ -65,7 +65,7 @@ docker-build-commit-master-branch:
     - docker login -u gitlab-ci-token -p ${CI_JOB_TOKEN} ${CI_REGISTRY}
     - >
       docker build --build-arg PARENT_IMAGE_NAME=${PARENT_IMAGE_NAME} --build-arg PARENT_IMAGE_TAG=${PARENT_IMAGE_TAG}
-      -t ${CI_REGISTRY_IMAGE}:${CI_COMMIT_TAG} -t ${CI_REGISTRY_IMAGE}:latest .
+      -t ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} -t ${CI_REGISTRY_IMAGE}:latest .
     - docker push ${CI_REGISTRY_IMAGE}
 
 docker-tag-already-built-image:
