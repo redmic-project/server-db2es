@@ -10,7 +10,7 @@ services:
       labels:
         traefik.port: "${MICROSERVICE_PORT}"
         traefik.docker.network: traefik-net
-        traefik.frontend.rule: PathPrefix:/api/${MICROSERVICE_NAME}
+        traefik.frontend.rule: PathPrefix:/${MICROSERVICE_NAME}
         traefik.backend: ${MICROSERVICE_NAME}
       placement:
         constraints:
