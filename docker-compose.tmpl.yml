@@ -7,13 +7,12 @@ services:
       - MICROSERVICE_NAME
       - MICROSERVICE_PORT
       - SPRING_PROFILES_ACTIVE
-      - SERVICE_PORT=${MICROSERVICE_PORT}
       - SPRING_DATASOURCE_USERNAME
       - SPRING_DATASOURCE_PASSWORD
       - JOBS_DATASOURCE_USERNAME
       - JOBS_DATASOURCE_PASSWORD
       - ELASTIC_XPACKSECURITYUSER
-      - JAVA_OPTS=-Xmx512m -Xss512m
+      - JAVA_OPTS=-Xmx2g -Xss2g
     networks:
       - elastic-net
       - postgres-net
