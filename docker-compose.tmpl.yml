@@ -12,7 +12,7 @@ services:
       - JOBS_DATASOURCE_USERNAME
       - JOBS_DATASOURCE_PASSWORD
       - ELASTIC_XPACKSECURITYUSER
-      - JAVA_OPTS=-Xmx2g -Xss2g
+      - JAVA_OPTS=-Xmx512m -Xss512m
     networks:
       - elastic-net
       - postgres-net
