@@ -14,7 +14,6 @@
 .mvn
 bin
 build
-lib/
 target
 .factorypath
 .springBeans
