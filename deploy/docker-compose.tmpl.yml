@@ -12,16 +12,22 @@ services:
       - JOBS_DATASOURCE_USERNAME
       - JOBS_DATASOURCE_PASSWORD
       - ELASTIC_XPACKSECURITYUSER
-      - JAVA_OPTS=-Xmx1g -Xss1g
+      - JAVA_OPTS=-XX:MaxRAMFraction=1
     networks:
       - elastic-net
       - postgres-net
       - redmic-net
+      - traefik-net
 
 networks:
   elastic-net:
     external: true
+
   postgres-net:
     external: true
+
   redmic-net:
+    external: true
+
+  traefik-net:
     external: true
