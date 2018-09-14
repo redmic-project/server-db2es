@@ -2,8 +2,6 @@ version: '3.5'
 
 services:
   db2es:
-    networks:
-      - traefik-net
     deploy:
       mode: replicated
       replicas: 1
@@ -15,11 +13,12 @@ services:
       placement:
         constraints:
           - node.role == worker
-          - node.labels.workerid == ${DESIRED_WORKER_ID}
       restart_policy:
-        condition: on-failure
-        max_attempts: 3
-
-networks:
-  traefik-net:
-    external: true
+        delay: 1m
+        window: 3m
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1G
+        reservations:
+          memory: 820M
