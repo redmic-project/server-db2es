@@ -12,7 +12,7 @@ services:
       - JOBS_DATASOURCE_USERNAME
       - JOBS_DATASOURCE_PASSWORD
       - ELASTIC_XPACKSECURITYUSER
-      - JAVA_OPTS=-XX:MaxRAMFraction=1
+      - JAVA_OPTS=-XX:MaxRAMFraction=2
     networks:
       - elastic-net
       - postgres-net
